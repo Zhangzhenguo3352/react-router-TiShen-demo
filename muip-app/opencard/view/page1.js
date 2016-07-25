@@ -9,51 +9,38 @@ import './app.css'
 // import User from './user.js';
 
 
-class Home extends Component {
 
-  render(){
-    const key = this.props.location.pathname.split('/')[1] || 'root'
+  const Home = ({ children, location: { pathname } }) =>{
+
+    const key = pathname.split('/')[1] || 'root'
     return(<h1>
-      <ReactCSSTransitionGroup
-        component="div" transitionName="swap"
-        transitionEnterTimeout={500} transitionLeaveTimeout={500}
-      >
-        {React.cloneElement(this.props.children || <div />, { key })}
-      </ReactCSSTransitionGroup>
-      </h1>)
-  }
-}
-
-class Page3 extends Component {
-
-  render(){
-
-    console.log(this)
-    return(
-      <div>
-      <h1><Link to="/">index</Link></h1>
-      <p><Link to="page3/Animation_1">动画1</Link></p>
-      <p><Link to="page3/Animation_2">动画22</Link></p>
-      <ReactCSSTransitionGroup
-          component="div" transitionName="example"
-          transitionEnterTimeout={500} transitionLeaveTimeout={500}
-        >
-          {React.cloneElement(this.props.children || <div/>, { key: this.props.location.pathname })}
-        </ReactCSSTransitionGroup>
-
-{/* <ReactCSSTransitionGroup
-//       component="div"
-//       transitionName="example"
-//       transitionEnterTimeout={500}
-//       transitionLeaveTimeout={500}
-//     >
-//
-//     </ReactCSSTransitionGroup>*/}
-
-      </div>
+          <ReactCSSTransitionGroup
+              component="div" transitionName="swap"
+              transitionEnterTimeout={500} transitionLeaveTimeout={500}
+              >
+            {React.cloneElement(children || <div />, { key })}
+          </ReactCSSTransitionGroup>
+      </h1>
     )
-  }
+
 }
+
+const Page3 = ({ children, location: { pathname } }) => (
+
+
+      <div className="Image">
+      <h1><Link to="/">index</Link></h1>
+      <p><Link to="/page3/Animation_1">动画1</Link></p>
+      <p><Link to="/page3/Animation_2">动画22</Link></p>
+        <ReactCSSTransitionGroup
+            component="div" transitionName="example"
+            transitionEnterTimeout={500} transitionLeaveTimeout={500}
+            >
+          {React.cloneElement(children || <div/>, { key: pathname })}
+        </ReactCSSTransitionGroup>
+      </div>
+
+)
 
 
 class Animation_1 extends Component {
@@ -84,9 +71,7 @@ const Page1 = () =>
         <IndexRoute component={Index}/>
         <Route path="page2" component={Page2}/>
         <Route path="page3" component={Page3}>
-          <Route path="Animation_1" component={Animation_1}>
-
-          <Route/>
+          <Route path="Animation_1" component={Animation_1}/>
           <Route path="Animation_2" component={Animation_2}/>
         </Route>
 
